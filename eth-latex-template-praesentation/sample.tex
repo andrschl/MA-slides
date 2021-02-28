@@ -53,26 +53,22 @@
     Learn time evolution of continuous-time dynamical system in presence of non-Markovian effects (time-delays/ hysteresis $\to$ partially observed ODE/PDE) using Neural ODEs.\\\vspace{0.1cm}
     \textbf{Problem:} $\dot{x}(t) = f(x(t))$ Markovian!
     \begin{itemize}
-        \item discrete-time
+        \item Discrete-time
             \hspace{5cm}\raisebox{-0.25cm}{\begin{tikzpicture}[line width=1.pt]
                 \node[state, text=white, draw=none, fill=gray!50!black, text width=0.6cm, text centered] (t+1)  {$x_{t+1}$};
                 \node[state, text=white, draw=none, fill=gray!50!black,left=of t+1, text width=0.6cm, text centered] (t)  {$x_{t}$};
                 \node[state, text=white, draw=none, fill=gray!50!black,left=of t, text width=0.6cm, text centered] (t-1)  {$x_{t-K}$};
                 \path (t) -- node[auto=false]{\ldots} (t-1);
-
-
-
                 \draw[every loop]
                     (t) edge[] node {} (t+1)
                     (t-1) edge[bend left] node {} (t+1);
-
              \end{tikzpicture}}
              \begin{flalign*}
                  &\Delta x_{t+1} = f(\underbrace{x_t, x_{t-1}, ..., x_{t-K}}_{z_t},\theta)&
              \end{flalign*}
         \vspace{0.25cm}
 
-         \item continuous-time?
+        \item Continuous-time?
              \begin{flalign*}
                  &\dot{x}(t) = f(\textcolor{red}{x_t}), \quad x_t(s) := x(t+s),\quad s \in [-r, 0]\quad &\\
                  &\;\text{\textcolor{red}{$\to\; x_t$ is $\infty$-dimensional}}&
@@ -95,10 +91,10 @@
         \item Euler discretization:\; $x_{t+1} = f(x_t, \theta) + x_t \;\to \Phi:x_0\mapsto x(T)$  continuous ResNet
         \item Loss gradients:
             \begin{itemize}
-                \item adjoint method:\quad $\dfrac{dJ}{d\theta} = \int_{0}^{T} \lambda(t)^\top \dfrac{\partial f(x(t),\theta)}{\partial \theta}\,dt$\\\vspace{0.1cm}
+                \item Adjoint method:\quad $\dfrac{dJ}{d\theta} = \int_{0}^{T} \lambda(t)^\top \dfrac{\partial f(x(t),\theta)}{\partial \theta}\,dt$\\\vspace{0.1cm}
                 with $\dot{\lambda}(t)^\top = -\ell'(x(t)) - \lambda(t)^\top \dfrac{\partial f(x(t),\theta)}{\partial x(t)},\quad \lambda(T)=L'(x(T))$\vspace{0.1cm}
                 
-                \item discrete sensitivities $\to$ automatic differentiation through solver
+                \item Discrete sensitivities $\to$ automatic differentiation through solver
             \end{itemize}
      \end{itemize}
      \textbf{ANODE}\\
@@ -125,9 +121,9 @@
         $\to$ combination of ResNet- and DenseNet-like connections
         \item Loss gradients: $J(\theta) = L(x(T)) + \int_0^T \ell(x(t))\,dt$
         \begin{itemize}
-            \item adjoint method:\quad $\dfrac{dJ}{d\theta} = \int_0^T \left[\lambda^\top\partial_\theta f+\partial_\theta \ell \right]\, dt$\\\vspace{0.1cm}
+            \item Adjoint method:\quad $\dfrac{dJ}{d\theta} = \int_0^T \left[\lambda^\top\partial_\theta f+\partial_\theta \ell \right]\, dt$\\\vspace{0.1cm}
             $\begin{cases}\dot{\lambda}(t)^\top = -\ell'(x(t)) - \lambda(t)^\top \dfrac{\partial f(x(t),x(t-\tau),\theta)}{\partial x(t)} - \lambda(t+\tau)^\top \dfrac{\partial f(x(t+\tau),x(t),\theta)}{\partial x(t)},\\\lambda(T)=L'(x(T))\end{cases}$\vspace{0.1cm}
-            \item discrete sensitivities $\to$ automatic differentiation through solver
+            \item Discrete sensitivities $\to$ automatic differentiation through solver
         \end{itemize}
      \end{itemize}
 
@@ -173,13 +169,13 @@
         \begin{column}[T]{0.25\textwidth}
             \textbf{ANODE:}
             \begin{itemize}
-                \item initialization of augmented states problematic
+                \item Initialization of augmented states problematic
             \end{itemize}
             \textbf{NDDE:}
             \begin{itemize}
-                \item works well with observation noise
-                \item generalization over time and initial conditions
-                \item also on more complex data
+                \item Works well with observation noise
+                \item Generalization over time and initial conditions
+                \item Also on more complex data
             \end{itemize}
         \end{column}
     \end{columns}
@@ -199,10 +195,10 @@
         \item Can approximate truncated Fourier series as solutions of linear DDEs
         \item Approximation of $1-$dimensional observations of periodic and chaotic attractors (Takens Embedding Theorem)
      \end{itemize}
-     \begin{figure}
-                \centering
-                \includegraphics[width=0.5\textwidth]{figures/lorenz.png}
-            \end{figure}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{figures/lorenz.png}
+    \end{figure}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -216,6 +212,11 @@
     $$\norm{x(t)}_2 \leq e^{-\gamma (t-t_0)}M\norm{\psi}_\infty \quad \text{for } t\geq t_0.$$
     \end{definition}
     \textbf{Example: } $\dot{x}(t) = -x(t-\tau) \to$ exponentially stable for $\tau<\pi/2$.
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.4\textwidth]{figures/linear_dde.png}
+    \end{figure}
+    
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -275,15 +276,15 @@
 Let $K$ and $\tau$ be such that $r_V:=K\tau\geq r$ and let $x(\cdot)$ be a solution of $\dot{x}(t)=f(x_t)$. Assume $f$ to be $L_f$-Lipschitz with respect to $\norm{\cdot}_\infty$ and $V:\R^n\to\R_+$ to be convex with,
 $$c_1 \norm{x}_2^2 \leq V(x) \leq c_2 \norm{x}_2^2.$$ Furthermore, assume that either of the following conditions is satisfied:
 \begin{itemize}
-    \item  $\max_{s\in[t_0-r_V,t_0]} \norm{x(s)}_2 \geq \varepsilon$
-    \textcolor{red}{$\to$ show convergence to $\varepsilon-$neighbourhood of origin only}
+    \item  $\max_{s\in[t_0-r_V,t_0]} \norm{x(s)}_2 \geq \varepsilon$\\\vspace{0.1cm}
+    \textcolor{red}{$\to$ show convergence to $\varepsilon-$neighbourhood of origin only}\vspace{0.1cm}
     \item $\max_{s\in[t_0-r_V,t_0]} \norm{x(s)}_2 \leq g(c)\max_{s\in[t_0-r_V+c,t_0+c]}\norm{x(s)}_2$ \\\vspace{0.1cm}
     \textcolor{red}{$\to$ satisfied for exponentially decaying oscillations (if $r_V$ large enough)}
 \end{itemize}
 Then if,
-\begin{equation}
+\begin{equation*}
     V(x(t_0-k\tau))\leq q V(x(t_0)) \quad,\forall k\in \lbrace 0,1,...,K \rbrace,\label{eq:DiscRazConProp}
-\end{equation}
+\end{equation*}
 and $\tau$ is small enough, it holds for any $s\in[-r_V,0]$,
 \begin{equation*}
     V(x(t_0+s))\leq \tilde{q}(\tau)V(x(t_0)),
@@ -370,7 +371,7 @@ and $\tau$ is small enough, it holds for any $s\in[-r_V,0]$,
 
 \begin{frame}
     \frametitle{Stabilization experiments}
-    \begin{columns}
+    \begin{columns}[T]
         \begin{column}{0.3\textwidth}
             \vspace{-1cm}
             \begin{figure}[h!]
@@ -397,8 +398,7 @@ and $\tau$ is small enough, it holds for any $s\in[-r_V,0]$,
                  \caption{Uncorrelated}
              \end{figure}
         \end{column}
-        \begin{column}{0.4\textwidth}
-        \textbf{}
+        \begin{column}[T]{0.4\textwidth}
         \textbf{Generalization}\\
         Evaluate continuous loss along 8 trajectories starting from
         $x(0)=(\cos(2\pi l/8), \sin(2\pi l/8))_{l=1}^8$
@@ -414,6 +414,9 @@ and $\tau$ is small enough, it holds for any $s\in[-r_V,0]$,
     \end{columns}
 \end{frame}
 
+\begin{frame}
+    \frametitle{Conclusion/future work?}
+\end{frame}
 
 \begin{closingframe}
 
